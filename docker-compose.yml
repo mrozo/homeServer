@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx
+    links:
+      - app
+    ports:
+      - 8080:80
+      - 8443:443
+    volumes: 
+      - /home/mroz/Workspace/homeServer/webroot:/var/www/html:ro
+      - /home/mroz/Workspace/homeServer/nginx/default.conf:/etc/nginx/nginx.conf:ro,z
+      - /home/mroz/Workspace/homeServer/logs/nginx:/logs
+    restart: always
+  app:
+    image: nextcloud:fpm
+    volumes:
+      - /home/mroz/Workspace/homeServer/webroot:/var/www/html
+      - /home/mroz/Workspace/homeServer/data:/data
+    restart: always
